@@ -47,6 +47,8 @@ namespace DS_IP92_LR8._2_ZalizchukD
             sr.Close();
         }
 
+        // =================== МИНИМАЛЬНОЕ ОСТОВНОЕ ДЕРЕВО ===================
+        
         public void MinimumSpanningTree()
         {
             List<int> marked = new List<int>();
@@ -55,11 +57,11 @@ namespace DS_IP92_LR8._2_ZalizchukD
 
             while (count < n)
             {
-                foreach (var vertex in marked)
+                foreach (var vertex in marked) // перебираем множество помеченных вершин
                 {
                     if (min == 0)
                     {
-                        for (int i = 0; i < n; i++)
+                        for (int i = 0; i < n; i++) // выбираем "начальное" минимальное значение
                         {
                             if (weight[vertex, i] != 0)
                             {
@@ -74,6 +76,7 @@ namespace DS_IP92_LR8._2_ZalizchukD
 
                     for (int i = 0; i < n; i++)
                     {
+                        // поиск минимального ребра для продолжения дерева (вершина не должна быть помечена)
                         if (min > weight[vertex, i] && weight[vertex, i] != 0 && !marked.Contains(i))
                         {
                             min = weight[vertex, i];
@@ -83,10 +86,10 @@ namespace DS_IP92_LR8._2_ZalizchukD
                     }
                 }
 
-                result[min_root, min_vertex] = min;
+                result[min_root, min_vertex] = min; // создаем ребро
                 result[min_vertex, min_root] = min;
-                marked.Add(min_vertex);
-                sum += min;
+                marked.Add(min_vertex); // помечаем вершину
+                sum += min; // добавляем вес ребра к сумме
                 min = 0;
                 count++;
 
@@ -98,18 +101,8 @@ namespace DS_IP92_LR8._2_ZalizchukD
             
         }
 
-        public void OutputWeight()
-        {
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    Console.Write($"{weight[i, j],4}");
-                }
-                Console.WriteLine();
-            }
-        }
-
+        // =================== ВЫВОД МАТРИЦЫ ===================
+        
         private void OutputMatrix(int[,] graph)
         {
             for (int i = 0; i < n; i++)
